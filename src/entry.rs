@@ -561,6 +561,8 @@ impl<'a> EntryFields<'a> {
                     })?;
                 if self.preserve_mtime {
                     if let Some(mtime) = get_mtime(&self.header) {
+                        eprintln!("Setting mtime: {:?} {:?}", dst, mtime);
+
                         filetime::set_symlink_file_times(dst, mtime, mtime).map_err(|e| {
                             TarError::new(format!("failed to set mtime for `{}`", dst.display()), e)
                         })?;
